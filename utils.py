@@ -69,6 +69,6 @@ def upload_blob(bucket_name, source_file_name):
     return link
 
 
-#example
-#transcribe("gs://alamakota1/coronavirus.mp3");
-#upload_blob('alamakota1', "/Users/adamszokalski/Projekty/Hackathony/Hackyeah-2020/test.mp3")
+
+#stranscribe("gs://alamakota1/coronavirus.mp3");
+print(upload_blob('alamakota1', "/Users/adamszokalski/Projekty/Hackathony/Hackyeah-2020/test.mp3"))

@@ -49,10 +49,10 @@ def transcribe(storage_uri):
     return (plaintext, sentences)
 
 
-#wrzucanie plików do cloud storage. ('alamakota1', plik(path))
-def upload_blob(bucket_name, source_file_name):
+#wrzucanie plików do cloud storage.
+def upload_blob(source_file_name):
     """Uploads a file to the bucket."""
-    # bucket_name = "your-bucket-name"
+    bucket_name = "alamakota1"
     # source_file_name = "local/path/to/file"
     destination_blob_name = ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
 
@@ -69,6 +69,6 @@ def upload_blob(bucket_name, source_file_name):
     return link
 
 
-
-#stranscribe("gs://alamakota1/coronavirus.mp3");
-print(upload_blob('alamakota1', "/Users/adamszokalski/Projekty/Hackathony/Hackyeah-2020/test.mp3"))
+#example
+#transcribe("gs://alamakota1/coronavirus.mp3");
+#upload_blob("/Users/adamszokalski/Projekty/Hackathony/Hackyeah-2020/test.mp3")

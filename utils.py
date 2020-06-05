@@ -2,6 +2,7 @@ from google.cloud import speech_v1p1beta1
 from google.cloud.speech_v1p1beta1 import enums
 from google.cloud import storage
 import random, string
+from moviepy.editor import *
 
 #transkrybowanie pliku audio. Przyjmuje gcloud-storage uri, zwraca (plaintext, zdania z timestampami)
 def transcribe(storage_uri):
@@ -24,6 +25,8 @@ def transcribe(storage_uri):
 
     enable_word_time_offsets = True
 
+    enable_automatic_punctuation = True
+
     # Encoding of audio data sent. This sample sets this explicitly.
     # This field is optional for FLAC and WAV audio formats.
     encoding = enums.RecognitionConfig.AudioEncoding.MP3
@@ -31,21 +34,26 @@ def transcribe(storage_uri):
         "language_code": language_code,
         "sample_rate_hertz": sample_rate_hertz,
         "encoding": encoding,
-        "enable_word_time_offsets": enable_word_time_offsets
+        "enable_word_time_offsets": enable_word_time_offsets,
+        "enable_automatic_punctuation": enable_automatic_punctuation
     }
     audio = {"uri": storage_uri}
 
     plaintext = ""
     sentences = []
 
-    response = client.recognize(config, audio)
+    operation = client.long_running_recognize(config, audio)
+
+    print(u"Waiting for operation to complete...")
+    response = operation.result()
+
+
     for result in response.results:
         # First alternative is the most probable result
         alternative = result.alternatives[0]
 
         plaintext += alternative.transcript + ' ';
         sentences.append((alternative.transcript, (alternative.words[0].start_time.seconds, alternative.words[0].start_time.nanos)))
-
     return (plaintext, sentences)
 
 
@@ -61,14 +69,23 @@ def upload_blob(source_file_name):
     blob = bucket.blob(destination_blob_name)
 
     blob.upload_from_filename(source_file_name)
-
- 
-    link = blob.path_helper(bucket_name, destination_blob_name)
-    link = 'gs://' + link
+    link = f"gs://alamakota1/{destination_blob_name}"
 
     return link
 
 
+#extracts .mp3 file from video and returns it's relative path
+def extract_audio(source_file_name):
+    video = VideoFileClip(source_file_name)
+    audio = video.audio 
+    path = 'audio/'+''.join(random.choices(string.ascii_uppercase + string.digits, k=5))+'.mp3'
+    audio.write_audiofile(path)
+    return path
+
+def test(res):
+    print(res[0])
+    print("------------------------------------------")
+    print(res[1])
+
 #example
-#transcribe("gs://alamakota1/coronavirus.mp3");
-#upload_blob("/Users/adamszokalski/Projekty/Hackathony/Hackyeah-2020/test.mp3")
+test(transcribe(upload_blob(extract_audio("test.mp4"))))

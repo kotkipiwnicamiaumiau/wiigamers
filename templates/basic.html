@@ -4,7 +4,11 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/yegor256/tacit@gh-pages/tacit-css-1.5.1.min.css"/>
+
+    <!-- Our CSS -->
     <link rel="stylesheet" href="/static/style.css" />
+     <!-- Bootstrap core CSS -->
+     <link rel="stylesheet" href="/static/style.css" />
     {% block include %} {% endblock %}
     <title>Wiigamers</title>
   </head>
@@ -14,6 +18,7 @@
         <nav>
           <h1>Wiigamers</h1>
         </nav>
+          
       </header>
       <div style="flex: 1;height:100%">
         {% block content %} {% endblock %}
@@ -24,8 +29,9 @@
 	    <li><a href="#">About</a></li>
 	    <li><a href="#">Github</a></li>
 	    <li>Made with ❤ by kotkipiwnicamiaumiau </li>
-	  </ul>
+    </ul>
       </footer>
+  
     </section>
   </body>
 </html>

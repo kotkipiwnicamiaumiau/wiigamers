@@ -134,7 +134,7 @@ def handle_video(video_id):
     db.close()
 
 def load_data(video_id):
-    filepath = 'static/vid/'+video_id+'.mp4'
+    filepath = 'vid/'+video_id+'.mp4'
     db = sqlite3.connect("kotki.db")
     cursor = db.cursor()
     cursor.execute(

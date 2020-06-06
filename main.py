@@ -36,6 +36,9 @@ def summary(id):
     transcript=["zdania dla pierwszej minuty", "zdania dla drugiej minuty", "zdania dla trzeciej minuty"]
     return render_template('summary.html', vid_filename=vid_filename, summary=summary, transcript=transcript, len=len)
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

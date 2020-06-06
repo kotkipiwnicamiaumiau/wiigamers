@@ -1,11 +1,11 @@
 {% extends "basic.html" %}
 {% block content %}
 <header>
-  <nav>
-    <h1>Generated Title</h1>
-  </nav>
-  
-</header>
+    <nav>
+      <h1>{{title}}</h1>
+    </nav>
+      
+  </header>
 <div class="container">
   <div class="player">
     <video id="myVideo" controls>
@@ -20,18 +20,36 @@
     {% endfor %}
   </div>
 
-  <div class="transcript">
-    <h1> Transcript </h1>
-    {% for i in range(len(transcript)) %}
-    <p> <a id="myLink" href="#" onclick="Rewind({{ i * 60 }});return false;"> <kbd> {{ i }}:00 </kbd> </a> {{ transcript[i] }} </p>
-    {% endfor %}
-  </div>
+    <div class="transcript">
+        <h1> Transcript </h1>
+        {% for i in range(len(transcript)) %}
+        <p class="minute"> <a id="myLink" href="#" onclick="Rewind({{ i * 60 }});return false;"> <kbd> {{ i }}:00 </kbd> </a> {{ transcript[i] }} </p>
+        {% endfor %}
+    </div>
 </div>
 <script>
-  function Rewind(time){
-      var vid = document.getElementById("myVideo");
-      vid.currentTime = time; 
-  }
+    function Rewind(time){
+        var vid = document.getElementById("myVideo");
+        vid.currentTime = time; 
+    }
+
+    var t=setInterval(listen,1000);
+
+    function listen() {
+        var i = 0;
+        var vid = document.getElementById("myVideo");
+        console.log(vid.currentTime);
+        i = Math.floor(vid.currentTime / 60);
+        var minutes = document.getElementsByClassName("minute");
+        for (let j = 0; j < minutes.length; j++) {
+            if(j != i){
+                minutes[j].classList.remove("hilight");
+            }
+        }
+        if(i < minutes.length){
+            minutes[i].classList.add("hilight");
+        }
+    }
 </script>
 
 {% endblock %}

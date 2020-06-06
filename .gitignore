@@ -3,5 +3,13 @@
 
 # macOS Finder files
 **/.DS_Store
+
+# python cache files
 __pycache__/
 *.pyc
+
+# virtualenv
+env/
+
+# kate temporary files
+*.kate-swp

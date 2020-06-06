@@ -33,6 +33,9 @@ def view():
 def summary(id):
     return render_template('summary.html')
 
+@app.route('/about')
+def about():
+    return render_template('about.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():

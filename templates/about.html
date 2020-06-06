@@ -1,0 +1,36 @@
+{% extends "basic.html" %}
+{% block content %}
+<header>
+    <nav>
+      <h1>Generated Title</h1>
+    </nav>
+      
+  </header>
+<div class="container">
+    <div class="player">
+        <video id="myVideo" controls>
+            <source src={{ url_for('static', filename="test.mp4") }} type="video/mp4">
+          Your browser does not support the video tag.
+        </video> 
+    </div>
+    <div class="summary">
+        <h1> Summary </h1>
+        <a id="myLink" href="#" onclick="Rewind(10);return false;"> Lorem ipsum dolor sit amet consectetur adipiscing elit.</a>  <a id="myLink" href="#" onclick="Rewind(105);return false;"> Morbi egestas sem neque </a>, nec viverra quam mattis sit amet. Mauris ut enim eget sapien fringilla ultricies vel vitae ligula. In tempor imperdiet lacus at tempor. Fusce hendrerit nulla at ante finibus, quis mattis neque malesuada. Donec porttitor quis augue vitae luctus. Curabitur sagittis vitae elit a placerat. Integer eleifend luctus erat et mollis. Nulla pulvinar, massa et convallis commodo, mi mauris hendrerit massa, non feugiat elit nisl quis nulla. Nunc nec erat lacus. Donec tincidunt molestie mauris rhoncus auctor. Vestibulum sodales finibus tortor, in convallis lorem lobortis vitae. Nullam fringilla magna ut arcu tristique, in varius ex convallis
+    </div>
+
+    <div class="transcript">
+        <h1> Transcript </h1>
+
+       <p> <a id="myLink" href="#" onclick="Rewind(0);return false;"> <kbd> 0:00 </kbd> </a>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi egestas sem neque, nec viverra quam mattis sit amet. Mauris ut enim eget sapien fringilla ultricies vel vitae ligula. In tempor imperdiet lacus at tempor. </p>
+       <p> <a id="myLink" href="#" onclick="Rewind(60);return false;"> <kbd> 1:00 </kbd> </a> Fusce hendrerit nulla at ante finibus, quis mattis neque malesuada. Donec porttitor quis augue vitae luctus. Curabitur sagittis vitae elit a placerat. Integer eleifend luctus erat et mollis. Nulla pulvinar, massa et convallis commodo, mi mauris hendrerit massa, non feugiat elit nisl quis nulla. Nunc nec erat lacus. Donec tincidunt molestie mauris rhoncus auctor. </p>
+       <p> <kbd> 2:00 </kbd> Vestibulum sodales finibus tortor, in convallis lorem lobortis vitae. Nullam fringilla magna ut arcu tristique, in varius ex convallis </p>
+    </div>
+</div>
+<script>
+    function Rewind(time){
+        var vid = document.getElementById("myVideo");
+        vid.currentTime = time; 
+    }
+</script>
+
+{% endblock %}

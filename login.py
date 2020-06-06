@@ -30,10 +30,9 @@ def createdb():
     cursor.execute(
         '''CREATE TABLE IF NOT EXISTS users(name TEXT,password TEXT)''')
     cursor.execute(
-        '''CREATE TABLE IF NOT EXISTS videos(title TEXT,id TEXT, summary TEXT, transcript TEXT)''')
+        '''CREATE TABLE IF NOT EXISTS videos(title TEXT,id TEXT)''')
     db.commit()
     db.close()
-
 
 def insertuser(username, hash):
     db = sqlite3.connect("kotki.db")

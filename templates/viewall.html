@@ -1,6 +1,16 @@
 {% extends "basic.html" %}
 {% block content %}
+
+<header>
+    <nav>
+      <h1>All videos</h1>
+    </nav>
+</header>
+
 <center>
-  {{videos}}
+  {% for item in videos|reverse %}
+    <h2><hr/><br/><a href="summary/{{ item[1]|int }}">{{ item[0] }}</h2></a>
+  {% endfor %}
 </center>
+
 {% endblock %}

@@ -49,7 +49,6 @@ def signup_f(user, passwd):
     try:
         passwdhash = hash(passwd)
         insertuser(user, passwdhash)
-        createuserdb(user)
     except BaseException:
         return False
     return True

@@ -6,6 +6,7 @@ import sys
 import json
 from flask import Flask, flash, render_template, redirect, request, url_for, jsonify, session, Response
 from login import signup_f, login_f
+from db import getVideos
 
 app = Flask(__name__)
 app.secret_key = '9je0jaj09jk9dkakdwjnjq'
@@ -13,7 +14,10 @@ app.secret_key = '9je0jaj09jk9dkakdwjnjq'
 
 @app.route('/')
 def main():
-    return redirect(url_for('upload'))
+    if 'username' in session:
+        return redirect(url_for('upload'))
+    else:
+        return redirect(url_for('viewall'))
 
 
 @app.route('/upload')
@@ -25,8 +29,8 @@ def upload():
 
 
 @app.route('/viewall')
-def view():
-    return render_template('viewall.html')
+def viewall():
+    return render_template('viewall.html', videos=getVideos())
 
 
 @app.route('/summary/<int:id>')

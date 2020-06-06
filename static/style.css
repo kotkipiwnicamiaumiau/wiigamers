@@ -17,6 +17,34 @@ section {
 }
 
 form{
+    padding-top: 25%;
     text-align: center;
-    top: 50%;
+}
+
+.video{
+    text-align: center;
+    width: 100%;
+}
+
+video{
+    width: 100%;
+}
+
+.summary{
+    width: 100%;
+}
+
+.summary a{
+    text-decoration: none;
+    color: black;
+    font-weight: normal;
+}
+
+.summary a:hover{
+    text-decoration: none;
+    background-color: rgba(60, 146, 238, 0.372);
+}
+
+.transcript a{
+    text-decoration: none;
 }

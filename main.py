@@ -7,14 +7,15 @@ app.secret_key = '9je0jaj09jk9dkakdwjnjq'
 
 @app.route('/')
 def main():
-    if 'username' in session:
-        return redirect(url_for('upload'))
-    else:
-        return redirect(url_for('view'))
+    return redirect(url_for('upload'))
 
 @app.route('/upload')
 def upload():
     return render_template('upload.html')
+
+@app.route('/summary')
+def summary():
+    return render_template('summary.html')
 
 @app.route('/viewall')
 def view():

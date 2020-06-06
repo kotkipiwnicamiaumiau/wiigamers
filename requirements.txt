@@ -30,3 +30,5 @@ tqdm
 urllib3
 flask
 autopep8
+eazymind
+nltk

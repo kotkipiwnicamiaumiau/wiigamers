@@ -1,9 +1,4 @@
 import hashlib, os, binascii, sqlite3
-import pymongo
-
-client = pymongo.MongoClient("mongodb+srv://admin:admin@cluster0-yo6tm.mongodb.net/<dbname>?retryWrites=true&w=majority")
-db = client.dogs
-coll = db.users
 
 def hash(password):
     salt = hashlib.sha256(os.urandom(60)).hexdigest().encode('ascii')
@@ -18,14 +13,27 @@ def verify(stored_password, provided_password):
     pwdhash = binascii.hexlify(pwdhash).decode('ascii')
     return pwdhash == stored_password
 
+def createdb():
+    db = sqlite3.connect("kotki.db")
+    cursor = db.cursor()
+    cursor.execute('''CREATE TABLE IF NOT EXISTS users(name TEXT,password TEXT)''')
+    cursor.execute('''CREATE TABLE IF NOT EXISTS videos(name TEXT,name1 TEXT)''')
+    db.commit()
+    db.close()
+
 def insertuser(username, hash):
-    post = {"username": username, "password": hash}
-    post_id = coll.insert_one(post)
+    db = sqlite3.connect("kotki.db")
+    cursor = db.cursor()
+    createdb()
+    cursor.execute('''INSERT INTO users(name,password) VALUES(?,?)''', (username,hash))
+    db.commit()
+    db.close()
 
 def signup_f(user, passwd):
     try:
         passwdhash=hash(passwd)
         insertuser(user,passwdhash)
+        createuserdb(user)
     except:
         return False
     return True
@@ -33,6 +41,13 @@ def signup_f(user, passwd):
 def login_f(user, passwd):
     if passwd == "":
         return False
-    res=coll.find_one({"username": user})
-    user1=res['password']
+    db = sqlite3.connect("kotki.db")
+    cursor = db.cursor()
+    cursor.execute('''SELECT password FROM users WHERE name=?''', (user,))
+    users = cursor.fetchone()
+    if users == None:
+        return False
+    user1=users[0]
+    db.commit()
+    db.close()
     return verify(user1, passwd)

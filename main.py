@@ -22,7 +22,10 @@ def view():
 
 @app.route('/summary/<int:id>')
 def summary(id):
-    return render_template('summary.html')
+    vid_filename="test.mp4"
+    summary=[("zdanie1", 5), ("zdanie2", 70)]
+    transcript=["zdania dla pierwszej minuty", "zdania dla drugiej minuty", "zdania dla trzeciej minuty"]
+    return render_template('summary.html', vid_filename=vid_filename, summary=summary, transcript=transcript, len=len)
 
 
 @app.route('/login', methods=['GET', 'POST'])

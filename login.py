@@ -34,7 +34,6 @@ def createdb():
     db.commit()
     db.close()
 
-
 def insertuser(username, hash):
     db = sqlite3.connect("kotki.db")
     cursor = db.cursor()

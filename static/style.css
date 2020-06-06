@@ -1,0 +1,14 @@
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    padding: 0;
+}
+section {
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+}
+.vspacer {
+    flex: 1;
+}

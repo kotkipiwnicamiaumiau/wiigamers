@@ -9,6 +9,10 @@ section {
     flex-direction: column;
     flex: 1;
 }
+<<<<<<< HEAD
 .vspacer {
+=======
+#vspacer {
+>>>>>>> 3d9c37c4ec781922f59d311f324d8798eacb5648
     flex: 1;
 }

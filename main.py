@@ -9,7 +9,7 @@ from flask import Flask, flash, render_template, redirect, request, url_for, jso
 from login import signup_f, login_f
 
 from werkzeug.utils import secure_filename
-from utils import handle_video
+from utils import handle_video, load_data
 from db import getVideos
 
 
@@ -44,7 +44,6 @@ def upload():
     elif request.method == 'POST':
         # check if the post request has the file part
         if 'file' not in request.files:
-            print("bbs")
             flash('No file part')
             return redirect(request.url)
         file = request.files['file']
@@ -66,12 +65,13 @@ def viewall():
     return render_template('viewall.html', videos=getVideos())
 
 
-@app.route('/summary/<int:id>')
+@app.route('/summary/<string:id>')
 def summary(id):
-    vid_filename="test.mp4"
-    summary=[("zdanie1", 5), ("zdanie2", 70)]
-    transcript=["zdania dla pierwszej minuty", "zdania dla drugiej minuty", "zdania dla trzeciej minuty"]
-    title="Generated Title"
+    (vid_filename, title, summary, transcript) = load_data(id)
+    # vid_filename="test.mp4"
+    # summary=[("zdanie1", 5), ("zdanie2", 70)]
+    # transcript=["zdania dla pierwszej minuty", "zdania dla drugiej minuty", "zdania dla trzeciej minuty"]
+    # title="Generated Title"
     return render_template('summary.html', vid_filename=vid_filename, summary=summary, transcript=transcript, title=title, len=len)
 
 @app.route('/about')

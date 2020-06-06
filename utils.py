@@ -7,6 +7,7 @@ import json
 from moviepy.editor import *
 from summarize_abstract import summarize_title
 from summarize_wybiorcze import summarize
+import sqlite3
 
 # transkrybowanie pliku audio. Przyjmuje gcloud-storage uri, zwraca
 # (plaintext, zdania z timestampami)
@@ -109,11 +110,16 @@ def test(res):
 def handle_video(video_id):
     filepath = 'static/vid/'+video_id+'.mp4'
     #to trwa długo, więc jeśli chcecie testować to sobie zapiszcie wartosci
-    (plaintext, sentences_timestamps) = transcribe(upload_blob(extract_audio(filepath)))
+    #(plaintext, sentences_timestamps) = transcribe(upload_blob(extract_audio(filepath)))
+    plaintext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et feugiat neque, ut aliquam neque. Suspendisse vitae diam id enim pharetra fringilla id ac velit. Aenean auctor elementum velit, accumsan luctus turpis congue quis. Proin a mi et neque dapibus euismod sed lacinia velit. In commodo feugiat erat a placerat. Nam laoreet mi ac ligula tempor euismod. Curabitur varius rutrum turpis. Proin sodales facilisis mi, at lobortis augue bibendum vitae. Sed vel tempor ipsum. Pellentesque at risus eu lectus cursus pellentesque. Ut ultricies velit mi, vel efficitur tellus blandit in. Donec dolor ante, vehicula vel egestas eget, hendrerit vehicula leo. Maecenas sed turpis congue, cursus ipsum ut, ultricies risus. Suspendisse potenti. Vivamus tempus finibus elit, at tempor lacus gravida ac. "
+    print("Uploaded: " + filepath)
+   
+    #title=summarize_title(plaintext)
+    #summary_sentences = summarize(plaintext) #zwraca tablice zdań
 
-    #magia maksa i kajtka
-    title=summarize_title(plaintext)
-    summary_sentences = summarize(plaintext) #zwraca tablice zdań
+    title = "Generated title"
+
+    print("summed")
     summary=[("zdanie1", 5), ("zdanie2", 70)] #tutaj maks użyj mojej tablicy sentences_timestamps i tablicy summary_sentences
     transcript=["zdania dla pierwszej minuty", "zdania dla drugiej minuty", "zdania dla trzeciej minuty"] #tutaj posortuj zdania z transcript co minute
 
@@ -123,9 +129,18 @@ def handle_video(video_id):
     db = sqlite3.connect("kotki.db")
     cursor = db.cursor()
     cursor.execute(
-        '''INSERT INTO videos(title,id, summary,transcript) VALUES(?,?,?,?)''', (time, video_id, summary_json, transcript_json))
+        '''INSERT INTO videos(title,id, summary,transcript) VALUES(?,?,?,?)''', (title, video_id, summary_json, transcript_json))
     db.commit()
     db.close()
+
+def load_data(video_id):
+    filepath = 'static/vid/'+video_id+'.mp4'
+    db = sqlite3.connect("kotki.db")
+    cursor = db.cursor()
+    cursor.execute(
+        '''SELECT (title, summary, transcript) FROM videos WHERE id = (?)''', (video_id))
+    ret = cursor.fetchone()[0]
+    return (filepath, ret[0], ret[1], ret[2]) #(path, title, summary, transcript)
     
 
 # example

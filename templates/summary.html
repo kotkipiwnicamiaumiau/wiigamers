@@ -1,37 +1,37 @@
 {% extends "basic.html" %}
 {% block content %}
 <header>
-    <nav>
-      <h1>Generated Title</h1>
-    </nav>
-      
-  </header>
+  <nav>
+    <h1>Generated Title</h1>
+  </nav>
+  
+</header>
 <div class="container">
-    <div class="player">
-        <video id="myVideo" controls>
-            <source src={{ url_for('static', filename=vid_filename) }} type="video/mp4">
-          Your browser does not support the video tag.
-        </video> 
-    </div>
-    <div class="summary">
-        <h1> Summary </h1>
-        {% for sentence in summary %}
-            <a id="myLink" href="#" onclick="Rewind({{ sentence[1] }});return false;"> {{ sentence[0] }} </a>
-        {% endfor %}
-    </div>
+  <div class="player">
+    <video id="myVideo" controls>
+      <source src={{ url_for('static', filename=vid_filename) }} type="video/mp4">
+        Your browser does not support the video tag.
+    </video> 
+  </div>
+  <div class="summary">
+    <h1> Summary </h1>
+    {% for sentence in summary %}
+    <a id="myLink" href="#" onclick="Rewind({{ sentence[1] }});return false;"> {{ sentence[0] }} </a>
+    {% endfor %}
+  </div>
 
-    <div class="transcript">
-        <h1> Transcript </h1>
-        {% for i in range(len(transcript)) %}
-        <p> <a id="myLink" href="#" onclick="Rewind({{ i * 60 }});return false;"> <kbd> {{ i }}:00 </kbd> </a> {{ transcript[i] }} </p>
-        {% endfor %}
-    </div>
+  <div class="transcript">
+    <h1> Transcript </h1>
+    {% for i in range(len(transcript)) %}
+    <p> <a id="myLink" href="#" onclick="Rewind({{ i * 60 }});return false;"> <kbd> {{ i }}:00 </kbd> </a> {{ transcript[i] }} </p>
+    {% endfor %}
+  </div>
 </div>
 <script>
-    function Rewind(time){
-        var vid = document.getElementById("myVideo");
-        vid.currentTime = time; 
-    }
+  function Rewind(time){
+      var vid = document.getElementById("myVideo");
+      vid.currentTime = time; 
+  }
 </script>
 
 {% endblock %}

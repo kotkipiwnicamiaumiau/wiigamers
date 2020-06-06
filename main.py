@@ -7,8 +7,11 @@ import json
 import string
 from flask import Flask, flash, render_template, redirect, request, url_for, jsonify, session, Response
 from login import signup_f, login_f
+
 from werkzeug.utils import secure_filename
 from utils import handle_video
+from db import getVideos
+
 
 UPLOAD_FOLDER = 'static/vid'
 ALLOWED_EXTENSIONS = {'mp4'}
@@ -17,13 +20,18 @@ def allowed_file(filename):
     return '.' in filename and \
            filename.rsplit('.', 1)[1].lower() in ALLOWED_EXTENSIONS
 
+
+
 app = Flask(__name__)
 app.secret_key = '9je0jaj09jk9dkakdwjnjq'
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 @app.route('/')
 def main():
-    return redirect(url_for('upload'))
+    if 'username' in session:
+        return redirect(url_for('upload'))
+    else:
+        return redirect(url_for('viewall'))
 
 
 @app.route('/upload', methods=["GET", 'POST'])
@@ -55,7 +63,7 @@ def upload():
 
 @app.route('/viewall')
 def viewall():
-    return render_template('viewall.html')
+    return render_template('viewall.html', videos=getVideos())
 
 
 @app.route('/summary/<int:id>')

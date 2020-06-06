@@ -23,6 +23,11 @@ def upload():
 def view():
     return render_template('viewall.html')
 
+@app.route('/summary/<int:id>')
+def solvetest(id):
+    return render_template('summary.html')
+
+
 @app.route('/login', methods=['GET', 'POST'])
 def login():
     if 'username' in session:

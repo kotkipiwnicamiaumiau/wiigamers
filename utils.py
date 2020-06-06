@@ -138,7 +138,7 @@ def load_data(video_id):
     db = sqlite3.connect("kotki.db")
     cursor = db.cursor()
     cursor.execute(
-        '''SELECT (title, summary, transcript) FROM videos WHERE id = (?)''', (video_id))
+        '''SELECT title, summary, transcript FROM videos WHERE id=?''', (video_id,))
     ret = cursor.fetchone()[0]
     return (filepath, ret[0], ret[1], ret[2]) #(path, title, summary, transcript)
     

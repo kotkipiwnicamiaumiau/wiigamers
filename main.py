@@ -1,24 +1,33 @@
-import os, os.path, random, hashlib, sys, json
+import os
+import os.path
+import random
+import hashlib
+import sys
+import json
 from flask import Flask, flash, render_template, redirect, request, url_for, jsonify, session, Response
 from login import signup_f, login_f
 
 app = Flask(__name__)
 app.secret_key = '9je0jaj09jk9dkakdwjnjq'
 
+
 @app.route('/')
 def main():
     return redirect(url_for('upload'))
 
+
 @app.route('/upload')
 def upload():
     if 'username' in session:
-        return render_template('upload.html', username = session.get('username'))
+        return render_template('upload.html', username=session.get('username'))
     else:
         return redirect(url_for('login'))
+
 
 @app.route('/viewall')
 def view():
     return render_template('viewall.html')
+
 
 @app.route('/summary/<int:id>')
 def summary(id):
@@ -41,7 +50,8 @@ def login():
             return redirect(url_for('main'))
         else:
             return render_template('login.html', info="Bad login or password!")
-    return render_template('login.html', info = "")
+    return render_template('login.html', info="")
+
 
 @app.route('/signup', methods=['GET', 'POST'])
 def signup():
@@ -53,7 +63,7 @@ def signup():
         if signup_f(username, password):
             return redirect(url_for('upload'))
         else:
-        	#Bad login or password
+            # Bad login or password
             return render_template('signup.html')
 
     return render_template('signup.html')
@@ -65,5 +75,6 @@ def logout():
     del session['password']
     return redirect('/')
 
-if __name__=='__main__':
+
+if __name__ == '__main__':
     app.run(debug=True)

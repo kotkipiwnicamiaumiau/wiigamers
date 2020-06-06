@@ -16,8 +16,13 @@
       <footer>
         <nav>
           <ul>
-            <li><a href="about">About</a></li>
+            <li><a href="/about">About</a></li>
             <li><a href="#">Github</a></li>
+            {% if 'username' in session %}
+            <li><a href="/logout">Logout</a></li>
+            {% else %}
+            <li><a href="/login">Login</a></li>
+            {% endif %}
             <li>Made with ❤ by kotkipiwnicamiaumiau </li>
           </ul>
         </nav>

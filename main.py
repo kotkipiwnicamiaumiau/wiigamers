@@ -24,7 +24,7 @@ def view():
     return render_template('viewall.html')
 
 @app.route('/summary/<int:id>')
-def solvetest(id):
+def summary(id):
     return render_template('summary.html')
 
 

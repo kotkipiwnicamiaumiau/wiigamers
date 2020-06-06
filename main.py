@@ -16,10 +16,6 @@ def upload():
     else:
         return redirect(url_for('login'))
 
-@app.route('/summary')
-def summary():
-    return render_template('summary.html')
-
 @app.route('/viewall')
 def view():
     return render_template('viewall.html')

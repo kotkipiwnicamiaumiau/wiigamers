@@ -13,9 +13,9 @@
           <h1>Wiigamers</h1>
         </nav>
       </header>
-      <article style="flex-grow: 1;">
-        Content goes here...
-      </article>
+      <div style="flex-grow: 1;">
+        {% block content %} {% endblock %}
+      </div>
       <footer>
 	<nav>
 	  <ul>
@@ -26,5 +26,4 @@
       </footer>
     </section>
   </body>
-
 </html>

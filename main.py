@@ -72,6 +72,8 @@ def summary(id):
     # summary=[("zdanie1", 5), ("zdanie2", 70)]
     # transcript=["zdania dla pierwszej minuty", "zdania dla drugiej minuty", "zdania dla trzeciej minuty"]
     # title="Generated Title"
+    summary = json.loads(summary)
+    transcript = json.loads(transcript)
     return render_template('summary.html', vid_filename=vid_filename, summary=summary, transcript=transcript, title=title, len=len)
 
 @app.route('/about')

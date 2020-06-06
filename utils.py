@@ -109,10 +109,11 @@ def test(res):
 
 def handle_video(video_id):
     filepath = 'static/vid/'+video_id+'.mp4'
+    print("Uploaded: " + filepath)
     #to trwa długo, więc jeśli chcecie testować to sobie zapiszcie wartosci
     #(plaintext, sentences_timestamps) = transcribe(upload_blob(extract_audio(filepath)))
     plaintext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et feugiat neque, ut aliquam neque. Suspendisse vitae diam id enim pharetra fringilla id ac velit. Aenean auctor elementum velit, accumsan luctus turpis congue quis. Proin a mi et neque dapibus euismod sed lacinia velit. In commodo feugiat erat a placerat. Nam laoreet mi ac ligula tempor euismod. Curabitur varius rutrum turpis. Proin sodales facilisis mi, at lobortis augue bibendum vitae. Sed vel tempor ipsum. Pellentesque at risus eu lectus cursus pellentesque. Ut ultricies velit mi, vel efficitur tellus blandit in. Donec dolor ante, vehicula vel egestas eget, hendrerit vehicula leo. Maecenas sed turpis congue, cursus ipsum ut, ultricies risus. Suspendisse potenti. Vivamus tempus finibus elit, at tempor lacus gravida ac. "
-    print("Uploaded: " + filepath)
+    
    
     #title=summarize_title(plaintext)
     #summary_sentences = summarize(plaintext) #zwraca tablice zdań
@@ -139,7 +140,7 @@ def load_data(video_id):
     cursor = db.cursor()
     cursor.execute(
         '''SELECT title, summary, transcript FROM videos WHERE id=?''', (video_id,))
-    ret = cursor.fetchone()[0]
+    ret = cursor.fetchone()
     return (filepath, ret[0], ret[1], ret[2]) #(path, title, summary, transcript)
     
 

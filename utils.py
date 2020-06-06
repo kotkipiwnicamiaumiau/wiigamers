@@ -115,14 +115,24 @@ def handle_video(video_id):
     plaintext = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur et feugiat neque, ut aliquam neque. Suspendisse vitae diam id enim pharetra fringilla id ac velit. Aenean auctor elementum velit, accumsan luctus turpis congue quis. Proin a mi et neque dapibus euismod sed lacinia velit. In commodo feugiat erat a placerat. Nam laoreet mi ac ligula tempor euismod. Curabitur varius rutrum turpis. Proin sodales facilisis mi, at lobortis augue bibendum vitae. Sed vel tempor ipsum. Pellentesque at risus eu lectus cursus pellentesque. Ut ultricies velit mi, vel efficitur tellus blandit in. Donec dolor ante, vehicula vel egestas eget, hendrerit vehicula leo. Maecenas sed turpis congue, cursus ipsum ut, ultricies risus. Suspendisse potenti. Vivamus tempus finibus elit, at tempor lacus gravida ac. "
     
    
-    #title=summarize_title(plaintext)
-    #summary_sentences = summarize(plaintext) #zwraca tablice zdań
-
-    title = "Generated title"
-
-    print("summed")
-    summary=[("zdanie1", 5), ("zdanie2", 70)] #tutaj maks użyj mojej tablicy sentences_timestamps i tablicy summary_sentences
-    transcript=["zdania dla pierwszej minuty", "zdania dla drugiej minuty", "zdania dla trzeciej minuty"] #tutaj posortuj zdania z transcript co minute
+    title=summarize_title(plaintext)
+    summary_sentences = summarize(plaintext) #zwraca tablice zdań
+    summary = []
+    next_sentence = 0
+    for sentence in summary_sentences:
+        while next_sentence < len(sentences_timestamps) and sentences_timestamps[next_sentence][0] != sentence:
+            print('not', sentence, sentences_timestamps[next_sentence][0])
+            next_sentence += 1
+        if next_sentence >= len(sentences_timestamps):
+            summary.append((sentence, sentences_timestamps[-1][1]))
+        else:
+            summary.append((sentence, sentences_timestamps[next_sentence][1]))
+    
+    transcript = []
+    for sentence, timestamp, ns in sentences_timestamps:
+        while len(transcript) <= timestamp // 60:
+            transcript.append('')
+        transcript[-1] += sentence
 
     summary_json = json.dumps(summary)
     transcript_json = json.dumps(transcript)
